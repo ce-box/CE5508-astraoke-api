@@ -1,12 +1,14 @@
 const express = require('express');
-const connectDB = require('./DB/connection');
-const Song = require('./api/songs');
-//const https = require('https')
-//const cors = require('cors')
+const cors = require('cors');
+
+const connect2mongo = require('./app/db/connection');
+const songsController = require('./app/api/songs');
+
+const { config } = require('./app/config');
+
+
 const app = express();
-
-
-connectDB();
+connect2mongo();
 
 app.use(express.json());
 
@@ -31,7 +33,8 @@ const songs=[
 
 
 ];
-app.use('/api/mongo', Song);
+
+app.use('/api/mongo', songsController);
 
 app.get('/',(req,res)=>{
     res.send('Project Api')
@@ -46,5 +49,6 @@ app.get('/api/songs/:id',(req,res)=>{
     if(!song) return res.status(404).send('No se encontro la cancion');
     else res.send(song);
 });
-const port = process.env.port || 3030;
-app.listen(port, () =>console.log('Esperando en '+port+'...'));
+
+const port = config.httpPort; 
+app.listen(port, () => console.log(`Server running 🚀 on port: ${port}... `));

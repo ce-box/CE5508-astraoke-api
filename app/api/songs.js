@@ -1,4 +1,4 @@
-const SongController= require('../controllers/songs');
+const SongController= require('../controllers/songs.controllers');
 const express = require('express');
 
 const router = express.Router();

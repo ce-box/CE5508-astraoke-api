@@ -1,6 +1,6 @@
 const express = require('express');
-const connectDB = require('./DB/connection');
-const Song = require('./api/songs');
+const connectDB = require('../app/db/connection');
+const routes = require('../app/api/routes');
 //const https = require('https')
 //const cors = require('cors')
 const app = express();
@@ -31,7 +31,7 @@ const songs=[
 
 
 ];
-app.use('/api/mongo', Song);
+app.use('/api/mongo', routes);
 
 app.get('/',(req,res)=>{
     res.send('Project Api')

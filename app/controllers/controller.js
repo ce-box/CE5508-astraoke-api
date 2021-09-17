@@ -48,7 +48,7 @@ const modiUser = (req,res)=>{
 
 //DELETE USER
 const deleteUser = (req,res)=>{
-    User.remove({_id: req.params.id}, (err,user)=>{
+    User.deleteOne({_id: req.params.id}, (err,user)=>{
         err && res.status(500).sen(err.message);
 
         res.status(200).json({message:'Successfully deleted'});

@@ -23,8 +23,10 @@ const findUser = (req,res)=>{
 //POST USER
 const addUser = (req,res)=>{
     let user = new User({
+        name: req.body.name,
         username: req.body.username,
         pass: req.body.pass,
+        email: req.body.email,
         premium: req.body.premium
     });
 

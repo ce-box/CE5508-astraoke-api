@@ -1,7 +1,7 @@
 const service = require('../services/users.services');
 
 const getAll = (req, res) => {
-
+    service.getAll(req, res);
 };
 
 const getById = (req, res) => {

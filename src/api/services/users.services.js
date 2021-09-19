@@ -32,7 +32,7 @@ const signup = async (req, res) => {
         console.log(`🟢 Creating new user: ${user}`);
         let newUser = await repository.insertUser(user);
         newUser = filterProperty(filter, newUser);
-        return res.status(200).json(newUser).end();
+        return res.status(201).json(newUser).end();
         
     } catch(err) {
         return res.status(500).send(err.message).end();
@@ -62,7 +62,7 @@ const login = async (req, res) => {
         if(credentials.pass === user.pass) {
             console.log(`🟢 User successfully authenticated`);
             user = filterProperty(filter, user);
-            return res.status(200).json(user).end();    
+            return res.status(202).json(user).end();    
         } else {
             console.log(`🔴 Wrong password`);
             return res.status(401).end(); 
@@ -70,19 +70,24 @@ const login = async (req, res) => {
 
     } catch (err) {
         console.log(`🔴 User login is not possible. The email:${credentials.email} is not registered in the system.`);
-        return res.status(401).end();
+        return res.status(404).end();
     }
 
     
 };
 
 
-const getAll = (req, res) => {
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const getAll = async (req, res) => {
     try {
-        const users = {
-
-        };
-
+        let users = await repository.getAll();
+        users = filterProperties(filter, users);
+        return res.status(200).json(users).end();
 
     } catch(err) {
         return res.status(500).send(err.message).end();
@@ -91,5 +96,6 @@ const getAll = (req, res) => {
 
 module.exports = {
     signup,
-    login
+    login,
+    getAll
 };

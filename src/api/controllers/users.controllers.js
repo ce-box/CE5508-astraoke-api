@@ -8,8 +8,12 @@ const getById = (req, res) => {
     
 };
 
-const createUser = (req, res) => {
-    service.insertUser(req, res);
+const signup = (req, res) => {
+    service.signup(req, res);
+};
+
+const login = (req, res) => {
+    service.login(req, res);
 };
 
 
@@ -24,7 +28,8 @@ const deleteUser = (req, res) => {
 module.exports = {
     getAll,
     getById,
-    createUser,
+    signup,
+    login,
     updateUser,
     deleteUser
 };

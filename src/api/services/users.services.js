@@ -6,7 +6,7 @@ const repository = require('../repositories/users.repository');
  * @param {*} res 
  * @returns 
  */
-const insertUser = async (req, res) => {
+const signup = async (req, res) => {
 
     const user = {
         name: req.body.name,
@@ -37,8 +37,41 @@ const insertUser = async (req, res) => {
 }
 
 
-const 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const login = async (req, res) => {
+    const credentials = {
+        email: req.body.email,
+        pass: req.body.pass
+    };
+
+    try {
+        // Check if user exists
+        const found = await repository.getUserByEmail(credentials.email); 
+        
+        // TODO: This must be changed to keycloack authentication.
+        // User authentication
+        if(credentials.pass === found.pass) {
+            console.log(`🟢 User successfully authenticated`);
+            return res.status(200).end();    
+        } 
+
+        console.log(`🔴 Wrong password`);
+        return res.status(401).end(); 
+
+    } catch (err) {
+        console.log(`🔴 User login is not possible. The email:${credentials.email} is not registered in the system.`);
+        return res.status(401).end();
+    }
+
+    
+};
 
 module.exports = {
-    insertUser
+    signup,
+    login
 };

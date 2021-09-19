@@ -86,16 +86,110 @@ const login = async (req, res) => {
 const getAll = async (req, res) => {
     try {
         let users = await repository.getAll();
+        console.log('🟢 User list request');
         users = filterProperties(filter, users);
         return res.status(200).json(users).end();
 
     } catch(err) {
+        console.log(`🔴 Internal Server Error`);
         return res.status(500).send(err.message).end();
     } 
 };
 
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const getById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let user = await repository.getUserById(id);
+
+        if(user) {
+            console.log(`🟢 User found`);
+            user = filterProperty(filter, user);
+            return res.status(200).json(user).end();
+        } 
+        console.log(`🟠 User not found`);
+        return res.status(404).end();
+
+    } catch(err) {
+        console.log(`🔴 Internal Server Error`);
+        return res.status(500).send(err.message).end();
+    } 
+};
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+ const deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let user = await repository.getUserById(id);
+
+        if(user) {
+            repository.deleteUser(id);
+            user = filterProperty(filter, user);
+            console.log(`🟢 User removed from DB`);
+            return res.status(200).json(user).end();
+        } 
+        console.log(`🟠 User not found`);
+        return res.status(404).end();
+
+    } catch(err) {
+        console.log(`🔴 Internal Server Error`);
+        return res.status(500).send(err.message).end();
+    } 
+};
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+const updateUser = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let user = await repository.getUserById(id);
+
+        if(user) {
+            
+            user = {
+                name: req.body.name || user.name,
+                username: req.body.username || user.username,
+                email: req.body.email || user.email,
+                premium: req.body.premium || user.premium
+            };
+
+            repository.updateUser(id, user);
+            user = filterProperty(filter, user);
+            console.log(`🟢 User updated`);
+            return res.status(200).json(user).end();
+        } 
+        console.log(`🟠 User not found`);
+        return res.status(404).end();
+
+    } catch(err) {
+        console.log(`🔴 Internal Server Error`);
+        return res.status(500).send(err.message).end();
+    } 
+};
+
+
 module.exports = {
     signup,
     login,
-    getAll
+    getAll,
+    getById,
+    updateUser,
+    deleteUser
 };

@@ -5,7 +5,7 @@ const getAll = (req, res) => {
 };
 
 const getById = (req, res) => {
-    
+    service.getById(req, res);
 };
 
 const signup = (req, res) => {
@@ -18,11 +18,11 @@ const login = (req, res) => {
 
 
 const updateUser = (req, res) => {
-
+    service.updateUser(req, res);
 };
 
 const deleteUser = (req, res) => {
-
+    service.deleteUser(req, res);
 };
 
 module.exports = {

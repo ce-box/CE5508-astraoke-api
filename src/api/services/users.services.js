@@ -1,4 +1,7 @@
 const repository = require('../repositories/users.repository');
+const {filterProperties, filterProperty} = require('../../util');
+
+const filter = ['id','name','username','email','premium'];
 
 /**
  * 
@@ -27,7 +30,8 @@ const signup = async (req, res) => {
 
         // Create new user
         console.log(`🟢 Creating new user: ${user}`);
-        const newUser = await repository.insertUser(user);
+        let newUser = await repository.insertUser(user);
+        newUser = filterProperty(filter, newUser);
         return res.status(200).json(newUser).end();
         
     } catch(err) {
@@ -51,17 +55,18 @@ const login = async (req, res) => {
 
     try {
         // Check if user exists
-        const found = await repository.getUserByEmail(credentials.email); 
+        let user = await repository.getUserByEmail(credentials.email);
         
         // TODO: This must be changed to keycloack authentication.
         // User authentication
-        if(credentials.pass === found.pass) {
+        if(credentials.pass === user.pass) {
             console.log(`🟢 User successfully authenticated`);
-            return res.status(200).end();    
-        } 
-
-        console.log(`🔴 Wrong password`);
-        return res.status(401).end(); 
+            user = filterProperty(filter, user);
+            return res.status(200).json(user).end();    
+        } else {
+            console.log(`🔴 Wrong password`);
+            return res.status(401).end(); 
+        }
 
     } catch (err) {
         console.log(`🔴 User login is not possible. The email:${credentials.email} is not registered in the system.`);
@@ -69,6 +74,19 @@ const login = async (req, res) => {
     }
 
     
+};
+
+
+const getAll = (req, res) => {
+    try {
+        const users = {
+
+        };
+
+
+    } catch(err) {
+        return res.status(500).send(err.message).end();
+    } 
 };
 
 module.exports = {

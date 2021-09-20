@@ -1,16 +1,13 @@
 const express = require('express');
 const controller = require('../controllers/users.controllers');
+const { passwordValidator } = require('../middleware/auth.middleware');
 const router = express.Router();
 
+router.post('/signup', passwordValidator ,controller.signup);
+router.post('/login', controller.login);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
-router.post('/', controller.createUser);
 router.put('/:id', controller.updateUser);
 router.delete('/:id', controller.deleteUser);
 
-// TODO: Encapsulate the really necessary methods in these
-/*router.post('/login', controller.addUser);
-router.post('/signup', controller.addUser);
-router.get('/me', controller.addUser);
-*/
 module.exports = router;

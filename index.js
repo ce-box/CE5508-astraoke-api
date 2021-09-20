@@ -19,7 +19,7 @@ app.all('/', function(req, res, next) {
 
 connect2mongo();
 
-//app.use('/api/songs', songsRoutes);
+app.use('/api/songs', songsRoutes);
 app.use('/api/users', userRoutes);
 
 // Home entry point

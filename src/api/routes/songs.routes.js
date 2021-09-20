@@ -2,12 +2,10 @@ const express = require('express');
 const controller = require('../controllers/songs.controllers');
 const router = express.Router();
 
-/*
-router.get('/', controller.findAllSongs);
-router.get('/:id', controller.findSong);
-router.post('/', controller.addSong);
-router.put('/:id', controller.modiSong);
+router.get('/', controller.getAll);
+router.get('/:id', controller.getById);
+router.post('/', controller.createSong);
+router.put('/:id', controller.updateSong);
 router.delete('/:id',controller.deleteSong)
-*/
 
 module.exports = router;

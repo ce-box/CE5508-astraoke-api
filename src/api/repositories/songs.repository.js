@@ -43,6 +43,21 @@ const getSongById = async (id) => {
 
 /**
  * 
+ * @param {*} name 
+ * @param {*} artist 
+ * @returns 
+ */
+const songExists = async (name, artist) => {
+    const song = await Song.findOne({
+        name:`${name}`,
+        artist:`${artist}`
+    });
+    return song;
+};
+
+
+/**
+ * 
  * @param {*} id 
  * @param {*} _song 
  * @returns 
@@ -69,5 +84,6 @@ module.exports = {
     updateSong,
     deleteSong,
     getAll,
-    getSongById
+    getSongById,
+    songExists
 };

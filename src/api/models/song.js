@@ -6,7 +6,7 @@ const songSchema = new mongoose.Schema({
     album: String,
     cover: String,
     url: String,
-    lyric:String,
+    lyrics:String,
 },
 {
     versionKey: false

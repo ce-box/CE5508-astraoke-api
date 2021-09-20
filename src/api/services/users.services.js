@@ -25,7 +25,7 @@ const signup = async (req, res) => {
         
         if(found) {
             console.log(`🟠 User with email: ${user.email} already exists`);
-            throw new Error('User already exists');
+            return res.status(403).send('User already exists').end();
         }
 
         // Create new user

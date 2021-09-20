@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const User = require('../models/user');
 
 /**
@@ -7,20 +6,12 @@ const User = require('../models/user');
  * @returns 
  */
 const insertUser = async (user) => {
-    const {
-        name,
-        username,
-        pass,
-        email,
-        premium
-    } = user;
-
     const newUser = new User({
-        name: name,
-        username: username,
-        pass: pass,
-        email: email,
-        premium: premium
+        name: user.name,
+        username: user.username,
+        pass: user.pass,
+        email: user.email,
+        premium: user.premium
     });
 
     await newUser.save();

@@ -22,7 +22,7 @@ const filterProperties = (filter,list) => {
  * @param {*} list 
  * @returns 
  */
- const filterProperty = (filter, obj) => {
+ const filterObject = (filter, obj) => {
     const newObj = {};
     
     for(const prop of filter) {
@@ -33,6 +33,5 @@ const filterProperties = (filter,list) => {
 };
 
 module.exports = {
-    filterProperties,
-    filterProperty
+    filterObject
 };

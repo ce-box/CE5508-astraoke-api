@@ -1,11 +1,6 @@
 const repository = require('../repositories/songs.repository');
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
+
 const getAll = async (req, res) => {
     try {
         const songs = await repository.getAll();
@@ -19,12 +14,6 @@ const getAll = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const getById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -44,12 +33,6 @@ const getById = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const createSong = async (req, res) => {
     try{
         const song = {
@@ -80,12 +63,6 @@ const createSong = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const updateSong = async (req, res) => {
     try {
         const id = req.params.id;
@@ -116,12 +93,6 @@ const updateSong = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const deleteSong = async (req, res) => {
     try {
         const id = req.params.id;

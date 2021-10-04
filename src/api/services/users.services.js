@@ -1,14 +1,9 @@
 const repository = require('../repositories/users.repository');
-const {filterProperties, filterProperty} = require('../../util');
+const {filterObject} = require('../../util');
 
 const filter = ['id','name','username','email','premium'];
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
+
 const signup = async (req, res) => {
 
     const user = {
@@ -31,7 +26,7 @@ const signup = async (req, res) => {
         // Create new user
         console.log(`🟢 Creating new user: ${user}`);
         let newUser = await repository.insertUser(user);
-        newUser = filterProperty(filter, newUser);
+        newUser = filterObject(filter, newUser);
         return res.status(201).json(newUser).end();
         
     } catch(err) {
@@ -41,12 +36,6 @@ const signup = async (req, res) => {
 }
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const login = async (req, res) => {
     const credentials = {
         email: req.body.email,
@@ -61,7 +50,7 @@ const login = async (req, res) => {
         // User authentication
         if(credentials.pass === user.pass) {
             console.log(`🟢 User successfully authenticated`);
-            user = filterProperty(filter, user);
+            user = filterObject(filter, user);
             return res.status(202).json(user).end();    
         } else {
             console.log(`🔴 Wrong password`);
@@ -77,17 +66,11 @@ const login = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const getAll = async (req, res) => {
     try {
         let users = await repository.getAll();
         console.log('🟢 User list request');
-        users = filterProperties(filter, users);
+        users = filterObject(filter, users);
         return res.status(200).json(users).end();
 
     } catch(err) {
@@ -97,12 +80,6 @@ const getAll = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const getById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -110,7 +87,7 @@ const getById = async (req, res) => {
 
         if(user) {
             console.log(`🟢 User found`);
-            user = filterProperty(filter, user);
+            user = filterObject(filter, user);
             return res.status(200).json(user).end();
         } 
         console.log(`🟠 User not found`);
@@ -123,20 +100,14 @@ const getById = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
- const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const id = req.params.id;
         let user = await repository.getUserById(id);
 
         if(user) {
             repository.deleteUser(id);
-            user = filterProperty(filter, user);
+            user = filterObject(filter, user);
             console.log(`🟢 User removed from DB`);
             return res.status(200).json(user).end();
         } 
@@ -150,12 +121,6 @@ const getById = async (req, res) => {
 };
 
 
-/**
- * 
- * @param {*} req 
- * @param {*} res 
- * @returns 
- */
 const updateUser = async (req, res) => {
     try {
         const id = req.params.id;
@@ -171,7 +136,7 @@ const updateUser = async (req, res) => {
             };
 
             repository.updateUser(id, user);
-            user = filterProperty(filter, user);
+            user = filterObject(filter, user);
             console.log(`🟢 User updated`);
             return res.status(200).json(user).end();
         } 

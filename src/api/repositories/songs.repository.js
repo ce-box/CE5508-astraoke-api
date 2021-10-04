@@ -1,10 +1,5 @@
 const Song = require('../models/song');
 
-/**
- * 
- * @param {*} song 
- * @returns 
- */
 const insertSong = async(song) => {
     const newSong = new Song({
         name: song.name,
@@ -20,33 +15,18 @@ const insertSong = async(song) => {
 };
 
 
-/**
- * 
- * @returns 
- */
 const getAll = async () => {
     const songList = await Song.find();
     return songList;
 }
 
 
-/**
- * 
- * @param {*} id 
- * @returns 
- */
 const getSongById = async (id) => {
     const song = await Song.findById(id);
     return song;
 };
 
 
-/**
- * 
- * @param {*} name 
- * @param {*} artist 
- * @returns 
- */
 const songExists = async (name, artist) => {
     const song = await Song.findOne({
         name:`${name}`,
@@ -56,23 +36,12 @@ const songExists = async (name, artist) => {
 };
 
 
-/**
- * 
- * @param {*} id 
- * @param {*} _song 
- * @returns 
- */
 const updateSong = async (id, _song) => {
     const song = Song.findByIdAndUpdate(id, _song);
     return song;
 };
 
 
-/**
- * 
- * @param {*} id 
- * @returns 
- */
 const deleteSong = async (id) => {
     const song = Song.findByIdAndDelete(id);
     return song;

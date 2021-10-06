@@ -10,5 +10,15 @@ const passwordValidator = (req, res, next) => {
 
     next();
 };
+const passwordValidatorTest = (passf) => {
+    const pass = passf;
+    
+    if(!regex.test(pass)) {
+        console.log(`🔴 Password does not comply with the required rules`);
+        return false
+    }
 
-module.exports = { passwordValidator };
+    return true
+};
+
+module.exports = { passwordValidator, passwordValidatorTest};

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { checkApiKey, checkRoles } = require('../middlewares/auth.handler');
+const { checkApiKey, checkRoles, passwordValidator } = require('../middlewares/auth.handler');
 const SongService = require('./../services/song.service');
 
 const router = express.Router();
@@ -27,6 +27,7 @@ router.get('/:id', checkApiKey, async (req, res, next) => {
 
 router.post('/', 
     checkApiKey,
+    passwordValidator,
     //checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{

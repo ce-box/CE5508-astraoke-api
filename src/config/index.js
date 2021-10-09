@@ -9,7 +9,8 @@ const config = {
         methods: ['GET','POST','PUT','DELETE'],
         optionsSuccessStatus: 204,
         credentials: true,
-    }
+    },
+    jwtSecret: process.env.JWT_SECRET,
 };
 
 module.exports = { config }

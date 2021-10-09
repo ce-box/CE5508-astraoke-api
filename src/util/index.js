@@ -1,11 +1,5 @@
 
-/**
- * 
- * @param {*} filter 
- * @param {*} list 
- * @returns 
- */
-const filterProperties = (filter,list) => {
+const filter = (filter,list) => {
     return list.map( obj => {
         const newObj = {};
         for(const prop of filter) {
@@ -15,14 +9,7 @@ const filterProperties = (filter,list) => {
     });
 };
 
-
-/**
- * 
- * @param {*} filter 
- * @param {*} list 
- * @returns 
- */
- const filterObject = (filter, obj) => {
+const filterObject = (filter, obj) => {
     const newObj = {};
     
     for(const prop of filter) {
@@ -33,5 +20,6 @@ const filterProperties = (filter,list) => {
 };
 
 module.exports = {
-    filterObject
+    filterObject,
+    filter
 };

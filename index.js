@@ -1,11 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const { config } = require('./src/config');
+const { logErrors, errorHandler, boomErrorHandler } = require('./src/api/middlewares/error.handler');
 
 const connect2mongo = require('./src/db/connection');
-
-const userRoutes = require('./src/api/routes/users.routes');
-const songsRoutes = require('./src/api/routes/songs.routes');
+const routerApi = require('./src/api/routes');
 
 const app = express();
 app.use(express.json());
@@ -18,15 +17,18 @@ app.all('/', function(req, res, next) {
 });
 
 connect2mongo();
-require('./utils');
-
-app.use('/api/v1/songs', songsRoutes);
-app.use('/api/v1/users', userRoutes);
 
 // Home entry point
 app.get('/',(req, res) => {
     res.send('Astraoke API 🎤🎵 ...');
 });
+
+routerApi(app);
+
+// Error handlers
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 
 const port = config.httpPort; 

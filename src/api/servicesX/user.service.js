@@ -1,4 +1,4 @@
-const repository = require('../repositories/users.repository');
+const repository = require('../services/user.service');
 const {filterObject} = require('../../util');
 
 const filter = ['id','name','username','email','premium'];

@@ -1,23 +1,15 @@
-const repository = require('../repositories/songs.repository');
+const songsRepository = require('../services/song.service');
 
 
 const getAll = async (req, res) => {
-    try {
-        const songs = await repository.getAll();
-        console.log('🟢 Request for the entire song catalog');
-        return res.status(200).json(songs).end();
-
-    } catch(err) {
-        console.log(`🔴 Internal Server Error`);
-        return res.status(500).send(err.message).end();
-    } 
+     
 };
 
 
 const getById = async (req, res) => {
     try {
         const id = req.params.id;
-        const song = await repository.getSongById(id);
+        const song = await songsRepository.getById(id);
 
         if(song) {
             console.log(`🟢 Song found`);
@@ -33,7 +25,7 @@ const getById = async (req, res) => {
 };
 
 
-const createSong = async (req, res) => {
+const create = async (req, res) => {
     try{
         const song = {
             name: req.body.name,
@@ -45,14 +37,14 @@ const createSong = async (req, res) => {
         };
 
         // Check if song already exists
-        if(await repository.songExists(song.name, song.artist)) {
+        if(await songsRepository.getBySignature(song.name, song.artist)) {
             console.log(`🟠 Song "${song.name}" of the artist "${song.artist}" has already been registered in the system`);
             return res.status(403).send('Song already exists').end();
         }
 
         // Create new song
         console.log(`🟢 Creating new song: ${song.name}`);
-        let newSong = await repository.insertSong(song);
+        let newSong = await songsRepository.create(song);
         return res.status(201).json(newSong).end();
 
         
@@ -63,10 +55,10 @@ const createSong = async (req, res) => {
 };
 
 
-const updateSong = async (req, res) => {
+const update = async (req, res) => {
     try {
         const id = req.params.id;
-        let song = await repository.getSongById(id);
+        let song = await songsRepository.getById(id);
 
         if(song) {
             
@@ -79,7 +71,7 @@ const updateSong = async (req, res) => {
                 lyrics: req.body.lyrics || song.lyrics
             };
 
-            repository.updateSong(id, song);
+            songsRepository.update(id, song);
             console.log(`🟢 Song updated`);
             return res.status(200).json(song).end();
         } 
@@ -93,13 +85,13 @@ const updateSong = async (req, res) => {
 };
 
 
-const deleteSong = async (req, res) => {
+const remove = async (req, res) => {
     try {
         const id = req.params.id;
-        let song = await repository.getSongById(id);
+        let song = await songsRepository.getById(id);
 
         if(song) {
-            repository.deleteSong(id);
+            songsRepository.remove(id);
             console.log(`🟢 Song removed from DB`);
             return res.status(200).json(song).end();
         } 
@@ -114,9 +106,9 @@ const deleteSong = async (req, res) => {
 
 
 module.exports = {
-    createSong,
-    updateSong,
-    deleteSong,
+    create,
+    update,
+    remove,
     getAll,
     getById
 };

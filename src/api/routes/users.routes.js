@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const { filter } = require('../../util');
 const { checkApiKey, checkRoles } = require('./../middlewares/auth.handler');
 
@@ -8,7 +9,8 @@ const service = new UserService();
 
 router.get('/',
     checkApiKey,
-    //checkRoles('admin'),
+    passport.authenticate('jwt', {session: false}),
+    checkRoles('admin'),
     async (req, res, next) => {
         try{
             let users = await service.find();
@@ -24,12 +26,13 @@ router.get('/',
     }
 );
 
-router.get('/:id',
+router.get('/me',
     checkApiKey,
+    passport.authenticate('jwt', {session: false}),
     async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const user = await service.findOne(id);
+        const { sub } = req.user;
+        const user = await service.findOne(sub);
         res.json(user);
     } catch (error) {
         next(error);
@@ -37,18 +40,21 @@ router.get('/:id',
 });
 
 
-router.post("/", checkApiKey, async (req, res, next) => {
-  try {
-    const user = req.body;
-    const newUser = await service.create(user);
-    res.status(201).json(newUser);
-  } catch (error) {
-    next(error);
-  }
+router.post("/", 
+    checkApiKey,
+    async (req, res, next) => {
+        try {
+            const user = req.body;
+            const newUser = await service.create(user);
+            res.status(201).json(newUser);
+        } catch (error) {
+            next(error);
+        }
 });
 
 router.patch('/:id',
     checkApiKey,
+    passport.authenticate('jwt', {session: false}),
     async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -72,6 +78,7 @@ router.patch('/:id',
 
 router.delete('/:id',
     checkApiKey,
+    passport.authenticate('jwt', {session: false}),
     async (req, res, next) => {
     try {
         const { id } = req.params;

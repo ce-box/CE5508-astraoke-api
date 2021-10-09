@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const { checkApiKey, checkRoles, passwordValidator } = require('../middlewares/auth.handler');
 const SongService = require('./../services/song.service');
@@ -18,7 +19,7 @@ router.get('/', checkApiKey, async (req, res, next) => {
 router.get('/:id', checkApiKey, async (req, res, next) => {
     try {
         const { id } = req.params;
-        const song = await service.findById(id);
+        const song = await service.findOne(id);
         res.json(song);
     } catch(error) {
         next(error);
@@ -27,8 +28,8 @@ router.get('/:id', checkApiKey, async (req, res, next) => {
 
 router.post('/', 
     checkApiKey,
-    passwordValidator,
-    //checkRoles('admin','premium-user'),
+    passport.authenticate('jwt', {session: false}),
+    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const song = req.body;
@@ -52,12 +53,13 @@ router.post('/',
 
 router.patch('/:id', 
     checkApiKey,
-    //checkRoles('admin','premium-user'),
+    passport.authenticate('jwt', {session: false}),
+    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const { id } = req.params;
             const body = req.body;
-            let song = await service.findById(id);
+            let song = await service.findOne(id);
     
             if(song) {
                 
@@ -70,7 +72,7 @@ router.patch('/:id',
                     lyrics: body.lyrics || song.lyrics
                 };
     
-                song = service.update(id, song);
+                service.update(id, song);
                 res.json(song);
             }
             
@@ -82,7 +84,8 @@ router.patch('/:id',
 
 router.delete('/:id',
     checkApiKey,
-    //checkRoles('admin','premium-user'),
+    passport.authenticate('jwt', {session: false}),
+    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const { id } = req.params;

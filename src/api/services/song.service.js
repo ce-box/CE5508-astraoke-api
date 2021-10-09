@@ -18,9 +18,6 @@ class SongService {
 
     async findByMetadata(songName, artist) {
         const song = await Song.findOne({name:`${songName}`, artist:`${artist}`});
-        if(!song) {
-            throw boom.notFound('Song not found');
-        }
         return song;
     }
 
@@ -38,7 +35,7 @@ class SongService {
     }
 
     async delete(id) {
-        const song = Song.findByIdAndDelete(user_id);
+        const song = Song.findByIdAndDelete(id);
         return song;
     }
 }

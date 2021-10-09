@@ -1,6 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/users.controllers');
-const { passwordValidator } = require('../middleware/auth.middleware');
+const { passwordValidator } = require('../middlewares/auth.middleware');
 const router = express.Router();
 
 router.post('/signup', passwordValidator ,controller.signup);

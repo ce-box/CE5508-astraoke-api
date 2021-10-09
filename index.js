@@ -18,9 +18,10 @@ app.all('/', function(req, res, next) {
 });
 
 connect2mongo();
+require('./utils');
 
-app.use('/api/songs', songsRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/v1/songs', songsRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Home entry point
 app.get('/',(req, res) => {

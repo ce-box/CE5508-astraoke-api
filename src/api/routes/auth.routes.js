@@ -19,7 +19,6 @@ router.post('/login',
           };
           const token = jwt.sign(payload, config.jwtSecret);
           res.json({
-            user,
             token
           });
         } catch (error) {

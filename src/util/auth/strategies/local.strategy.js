@@ -11,7 +11,7 @@ const LocalStrategy = new Strategy({
     }, 
     async (email, password, done) => {
         try {
-            const user = await service.findByEmail(email);
+            let user = await service.findByEmail(email);
             if (!user) {
                 done(boom.unauthorized(), false);
             }
@@ -20,6 +20,7 @@ const LocalStrategy = new Strategy({
             if (!isMatch) {
                 done(boom.unauthorized(), false);
             }
+            user = user.toObject();
             delete user.password;
             done(null, user);
         } catch (error) {

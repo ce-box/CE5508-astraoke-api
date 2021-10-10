@@ -32,7 +32,6 @@ class UserService {
 
     async findByEmail(email) {
         let user = await User.findOne({'email':`${email}`});
-        user = user.toObject();
         return user;
     }
 

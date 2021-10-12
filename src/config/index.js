@@ -12,6 +12,10 @@ const config = {
     },
     jwtSecret: process.env.JWT_SECRET,
     apiKey: process.env.API_KEY,
+    getStorageAccountName: () => {
+        const name = /AccountName=(.*?);/.exec(process.env.AZURE_STORAGE_CONNECTION_STRING);
+        return name[1];
+    },
 };
 
 module.exports = { config }

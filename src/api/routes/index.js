@@ -3,6 +3,7 @@ const express = require('express');
 const songsRouter = require('./songs.routes');
 const usersRouter = require('./users.routes');
 const authRouter = require('./auth.routes');
+const filesRouter = require('./files.routes');
 
 const routerApi = (app) => {
     const router = express.Router();
@@ -10,6 +11,7 @@ const routerApi = (app) => {
     router.use('/songs', songsRouter);
     router.use('/users', usersRouter);
     router.use('/auth', authRouter);
+    router.use('/files', filesRouter);
 };
 
 module.exports = routerApi;

@@ -5,10 +5,12 @@ const { logErrors, errorHandler, boomErrorHandler } = require('./src/api/middlew
 
 const connect2mongo = require('./src/db/connection');
 const routerApi = require('./src/api/routes');
+const { checkApiKey } = require('./src/api/middlewares/auth.handler');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use('', checkApiKey)
 app.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE');

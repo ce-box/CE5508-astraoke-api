@@ -4,14 +4,16 @@ const songsRouter = require('./songs.routes');
 const usersRouter = require('./users.routes');
 const authRouter = require('./auth.routes');
 const filesRouter = require('./files.routes');
+const statsRouter = require('./stats.routes');
+const artistsRouter = require('./artists.routes');
 
 const routerApi = (app) => {
-    const router = express.Router();
-    app.use('/api/v1', router);
-    router.use('/songs', songsRouter);
-    router.use('/users', usersRouter);
-    router.use('/auth', authRouter);
-    router.use('/files', filesRouter);
+    app.use('/api/v1/users', usersRouter);
+    app.use('/api/v1/auth', authRouter);
+    app.use('/api/v1/files', filesRouter);
+    app.use('/api/v1/songs', songsRouter);
+    app.use('/api/v1/stats', statsRouter);
+    app.use('/api/v1/artist', artistsRouter);
 };
 
 module.exports = routerApi;

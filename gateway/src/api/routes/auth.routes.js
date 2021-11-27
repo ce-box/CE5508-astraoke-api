@@ -3,12 +3,10 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 const { config } = require('./../../config');
-const { checkApiKey } = require('../middlewares/auth.handler');
 
 const router = express.Router();
 
 router.post('/login',
-    checkApiKey,
     passport.authenticate('local', {session: false}),
     async (req, res, next) => {
         try {

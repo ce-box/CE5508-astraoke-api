@@ -1,4 +1,4 @@
 #! /bin/sh
 
-echo "Running Astraoke API 🎤🎵 :production 🚀..."
+echo "Running Astraoke Songs API 📀🎤🎵 :production 🚀..."
 npm run start

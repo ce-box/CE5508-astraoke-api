@@ -1,12 +1,7 @@
 version: "3.7"
 services:
   server:
-    image: straoke-api
-    container_name: straoke-api
-    build: .
+    image: estalvgs/songs-api
+    container_name: astraoke-songs-api
     ports:
-      - "8081:8080"
-networks:
-    default:
-        external: true
-        name: network-jenkins
+      - "8083:8080"

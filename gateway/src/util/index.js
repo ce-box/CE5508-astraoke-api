@@ -1,25 +1,12 @@
-
-const filter = (filter,list) => {
-    return list.map( obj => {
-        const newObj = {};
-        for(const prop of filter) {
-            newObj[prop] = obj[prop];
-        }
-        return newObj;
-    });
-};
-
-const filterObject = (filter, obj) => {
-    const newObj = {};
-    
-    for(const prop of filter) {
-        newObj[prop] = obj[prop];
+const restream = (proxyReq, req, res, options) => {
+    if (req.body) {
+        let bodyData = JSON.stringify(req.body);
+        // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
+        proxyReq.setHeader('Content-Type','application/json');
+        proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+        // stream the content
+        proxyReq.write(bodyData);
     }
-    
-    return newObj;
-};
+}
 
-module.exports = {
-    filterObject,
-    filter
-};
+module.exports = { restream };

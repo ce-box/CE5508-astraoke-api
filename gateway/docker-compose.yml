@@ -1,12 +1,29 @@
 version: "3.7"
 services:
-  server:
-    image: straoke-api
-    container_name: straoke-api
-    build: .
+  gateway:
+    image: estalvgs/api-gateway
+    container_name: astraoke-api-gateway
+    environment:
+      STATS_URL: "http://stats:8080"
+      SONGS_URL: "http://songs:8080"
+      USERS_URL: "http://users:8080"
+      ARTISTS_URL: "http://artists:8080"
     ports:
-      - "8081:8080"
-networks:
-    default:
-        external: true
-        name: network-jenkins
+      - "8000:8080"
+
+  stats:
+    image: estalvgs/stats-api
+    container_name: astraoke-stats-api
+
+  songs:
+    image: estalvgs/songs-api
+    container_name: astraoke-songs-api
+
+  users:
+    image: estalvgs/users-api
+    container_name: astraoke-users-api
+
+  artists:
+    image: estalvgs/artist-api
+    container_name: astraoke-artists-api
+    

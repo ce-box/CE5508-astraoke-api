@@ -1,13 +1,15 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const passport = require('passport');
+const { restream } = require('../../util');
 
-const { checkRoles } = require('../middlewares/auth.handler');
+const { checkRoles, fixRequestBody } = require('../middlewares/auth.handler');
 const router = express.Router();
 
 const options = {
     target: `${process.env.USERS_URL}/api/v1/users/`,
     changeOrigin: true,
+    onProxyReq: restream,
     ws: true,
     pathRewrite: {
         [`^/api/v1/users`]: ''
@@ -20,9 +22,7 @@ router.get('/', usersProxy);
 
 router.get('/:id', usersProxy);
 
-router.post('/', 
-    passport.authenticate('jwt', {session: false}),
-    checkRoles('admin','premium-user'),
+router.post('/',
     usersProxy
 );
 

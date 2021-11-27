@@ -13,7 +13,7 @@ const routerApi = (app) => {
     app.use('/api/v1/files', filesRouter);
     app.use('/api/v1/songs', songsRouter);
     app.use('/api/v1/stats', statsRouter);
-    app.use('/api/v1/artist', artistsRouter);
+    app.use('/api/v1/artists', artistsRouter);
 };
 
 module.exports = routerApi;

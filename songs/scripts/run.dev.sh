@@ -1,4 +1,4 @@
 #! /bin/sh
 
-echo "Running Astraoke API 🎤🎵 in DEV mode 🚀..."
+echo "Running Astraoke Songs API 📀🎤🎵 in DEV mode 🚀..."
 npm run dev

@@ -17,11 +17,10 @@ app.all('/', function(req, res, next) {
 });
 
 connect2mongo();
-require('./src/util/auth');
 
 // Home entry point
 app.get('/',(req, res) => {
-    res.send('Astraoke API 🎤🎵 ...');
+    res.send('Astraoke Songs API 📀🎤🎵 ...');
 });
 
 routerApi(app);

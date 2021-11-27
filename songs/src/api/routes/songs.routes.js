@@ -1,13 +1,10 @@
 const express = require('express');
-const passport = require('passport');
-
-const { checkApiKey, checkRoles, passwordValidator } = require('../middlewares/auth.handler');
 const SongService = require('./../services/song.service');
 
 const router = express.Router();
 const service = new SongService();
 
-router.get('/', checkApiKey, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const songs = await service.find();
         return res.status(200).json(songs).end();
@@ -16,7 +13,7 @@ router.get('/', checkApiKey, async (req, res, next) => {
     }
 });
 
-router.get('/:id', checkApiKey, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params;
         const song = await service.findOne(id);
@@ -27,9 +24,6 @@ router.get('/:id', checkApiKey, async (req, res, next) => {
 });
 
 router.post('/', 
-    checkApiKey,
-    passport.authenticate('jwt', {session: false}),
-    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const song = req.body;
@@ -52,9 +46,6 @@ router.post('/',
 );
 
 router.patch('/:id', 
-    checkApiKey,
-    passport.authenticate('jwt', {session: false}),
-    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const { id } = req.params;
@@ -83,9 +74,6 @@ router.patch('/:id',
 );
 
 router.delete('/:id',
-    checkApiKey,
-    passport.authenticate('jwt', {session: false}),
-    checkRoles('admin','premium-user'),
     async (req, res, next) => {
         try{
             const { id } = req.params;

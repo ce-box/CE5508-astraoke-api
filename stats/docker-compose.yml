@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  server:
+    image: estalvgs/stats-api
+    container_name: astraoke-stats-api
+    ports:
+      - "8084:8080"

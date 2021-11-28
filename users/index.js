@@ -17,6 +17,7 @@ app.all('/', function(req, res, next) {
 });
 
 connect2mongo();
+require('./src/util/auth');
 
 // Home entry point
 app.get('/',(req, res) => {

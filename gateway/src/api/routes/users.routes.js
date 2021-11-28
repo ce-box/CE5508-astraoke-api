@@ -20,7 +20,7 @@ const usersProxy = createProxyMiddleware(options);
 
 router.get('/', usersProxy);
 
-router.get('/:id', usersProxy);
+router.get('/me', passport.authenticate('jwt', {session: false}), usersProxy);
 
 router.post('/',
     usersProxy

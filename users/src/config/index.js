@@ -10,6 +10,7 @@ const config = {
         optionsSuccessStatus: 204,
         credentials: true,
     },
+    jwtSecret: process.env.JWT_SECRET,
     apiKey: process.env.API_KEY,
     getStorageAccountName: () => {
         const name = /AccountName=(.*?);/.exec(process.env.AZURE_STORAGE_CONNECTION_STRING);

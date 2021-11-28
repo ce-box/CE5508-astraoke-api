@@ -1,5 +1,6 @@
 const express = require('express');
 const { filter } = require('../../util');
+const passport = require('passport');
 
 const router = express.Router();
 const UserService = require('./../services/user.service');
@@ -21,11 +22,12 @@ router.get('/',
     }
 );
 
-router.get('/:id',
+router.get('/me',
+    passport.authenticate('jwt', {session: false}),
     async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const user = await service.findOne(id);
+        const { sub } = req.user;
+        const user = await service.findOne(sub);
         res.json(user);
     } catch (error) {
         next(error);

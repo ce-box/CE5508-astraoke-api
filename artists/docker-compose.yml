@@ -1,0 +1,7 @@
+version: "3.8"
+
+services:
+    app:
+        image: estalvgs/artist-api
+        ports:
+            - "8081:8080"

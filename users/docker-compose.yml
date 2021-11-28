@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  server:
+    image: estalvgs/users-api
+    container_name: astraoke-users-api
+    build: .
+    ports:
+      - "8082:8080"

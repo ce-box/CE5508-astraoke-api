@@ -1,0 +1,13 @@
+{
+    "material-icon-theme.languages.associations": {
+        
+    },
+    "material-icon-theme.folders.associations": {
+        "controllers": "components",
+        "repositories": "scala"
+    },
+    "cSpell.words": [
+        "Astraoke",
+        "originalname"
+    ]
+}

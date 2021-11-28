@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  server:
+    image: estalvgs/songs-api
+    container_name: astraoke-songs-api
+    ports:
+      - "8083:8080"

@@ -35,7 +35,7 @@ class SongService {
     }
 
     async delete(id) {
-        const song = Song.findOneAndDelete(id);
+        const song = Song.deleteOne({ _id: id});
         return song;
     }
 }

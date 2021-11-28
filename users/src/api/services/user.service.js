@@ -51,7 +51,7 @@ class UserService {
     }
 
     async delete(id) {
-        let user = await User.findOneAndDelete(id);
+        let user = await User.deleteOne({ _id: id});
         user = user.toObject();
         delete user.password;
         return user;
